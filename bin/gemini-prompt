@@ -1,0 +1,76 @@
+#!/usr/bin/env raku
+use v6.d;
+
+use WWW::Gemini;
+
+my %*SUB-MAIN-OPTS =
+        :named-anywhere,
+        # allow named variables at any location
+        ;
+
+#| Text processing using the Gemini API.
+multi sub gemini-front(Str $text,                                   #= Text to be processed.
+                     Str :$path = 'generateText',                 #= Path, one of 'generateText', 'generateMessage', 'embedText', or 'models'.
+                     UInt :$n = 1,                                #= Number of completions or generations.
+                     UInt :mt(:$max-output-tokens) = 100,         #= The maximum number of tokens to generate in the completion.
+                     Str :m(:$model) is copy = 'Whatever',        #= Model.
+                     Real :t(:$temperature) = 0.7,                #= Temperature.
+                     Str :a(:$auth-key) is copy = 'Whatever',     #= Authorization key (to use Gemini API.)
+                     UInt :$timeout= 10,                          #= Timeout.
+                     Str :f(:$format) is copy = 'Whatever',       #= Format of the result; one of "json", "hash", "values", or "Whatever".
+                     Str :$method is copy = 'tiny',               #= Method for the HTTP POST query; one of "tiny" or "curl".
+                     ) {
+
+    if $text.chars == 0 {
+        note 'Nothing.';
+        return;
+    }
+
+    if $auth-key eq 'Whatever' {
+        if %*ENV<PALM_API_KEY>:exists {
+            $auth-key = %*ENV<PALM_API_KEY>;
+        } else {
+            note 'Cannot find Gemini authorization key. ' ~
+                    'Please provide a valid key to the argument auth-key, or set the ENV variable PALM_API_KEY.';
+            $auth-key = ''
+        }
+    }
+
+    if $format.lc ∈ <v auto whatever> { $format = 'values'; }
+
+    my $res =
+            gemini-prompt($text,
+                    :$path,
+                    model => $model eq 'Whatever' ?? Whatever !! $model,
+                    :$max-output-tokens,
+                    candidate-count => $n,
+                    :$temperature,
+                    :$auth-key,
+                    :$timeout,
+                    :$format,
+                    :$method);
+
+    if $format.lc ∈ <hash raku> {
+        say $res.raku;
+    } else {
+        say $res;
+    }
+}
+
+
+multi sub MAIN
+#= Command given as a sequence of words.
+(*@words,
+ Str :$path = 'generateContent',              #= Path, one of 'generateContent', 'embedContent', 'countTokens', or 'models'.
+ UInt :$n = 1,                                #= Number of completions or generations.
+ UInt :mt(:$max-output-tokens) = 100,         #= The maximum number of tokens to generate in the completion.
+ Str :m(:$model) is copy = 'Whatever',        #= Model.
+ Real :t(:$temperature) = 0.7,                #= Temperature.
+ Str :a(:$auth-key) is copy = 'Whatever',     #= Authorization key (to use Gemini API.)
+ UInt :$timeout= 10,                          #= Timeout.
+ Str :f(:$format) is copy = 'values',         #= Format of the result; one of "json", "hash", "values", or "Whatever".
+ Str :$method is copy = 'tiny',               #= Method for the HTTP POST query; one of "tiny" or "curl".
+ ) {
+    return gemini-front(@words.join(' ').Str, :$model, :$path, :$n, :$max-output-tokens, :$temperature, :$auth-key,
+            :$timeout, :$format, :$method);
+}
