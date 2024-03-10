@@ -1,0 +1,40 @@
+{
+  "name": "WWW::Gemini",
+  "description": "WWW::Gemini provides access to the Google's Gemini.",
+  "version": "0.1.0",
+  "raku": "6.d",
+  "authors": [
+    "Anton Antonov"
+  ],
+  "auth": "zef:antononcube",
+  "depends": [
+    "HTTP::Tiny:ver<0.2.5+>",
+    "JSON::Fast:ver<0.17+>"
+  ],
+  "build-depends": [],
+  "test-depends": [],
+  "provides": {
+    "WWW::Gemini": "lib/WWW/Gemini.rakumod",
+    "WWW::Gemini::EmbedContent": "lib/WWW/Gemini/EmbedContent.rakumod",
+    "WWW::Gemini::GenerateContent": "lib/WWW/Gemini/GenerateContent.rakumod",
+    "WWW::Gemini::Models": "lib/WWW/Gemini/Models.rakumod",
+    "WWW::Gemini::Request": "lib/WWW/Gemini/Request.rakumod"
+  },
+  "resources": [ ],
+  "license": "Artistic-2.0",
+  "tags": [
+    "ai",
+    "api",
+    "art",
+    "censorship",
+    "gemini",
+    "generative art",
+    "generative",
+    "transcription",
+    "translation",
+    "web service",
+    "web"
+  ],
+  "api": "1",
+  "source-url": "https://github.com/antononcube/Raku-WWW-Gemini"
+}
