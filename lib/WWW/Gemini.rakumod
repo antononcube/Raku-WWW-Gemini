@@ -43,7 +43,7 @@ multi sub gemini-generate-content(**@args, *%args) {
 our proto gemini-embed-content(|) is export {*}
 
 multi sub gemini-embed-content(**@args, *%args) {
-    return WWW::Gemini::EmbedContent::GeminiEmbedText(|@args, |%args);
+    return WWW::Gemini::EmbedContent::GeminiEmbedContent(|@args, |%args);
 }
 
 #===========================================================
@@ -51,7 +51,7 @@ multi sub gemini-embed-content(**@args, *%args) {
 our proto gemini-models(|) is export {*}
 
 multi sub gemini-models(*%args) {
-    return WWW::Gemini::Models::PaLMModels(|%args);
+    return WWW::Gemini::Models::GeminiModels(|%args);
 }
 
 
