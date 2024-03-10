@@ -188,7 +188,7 @@ multi sub gemini-request(Str :$url!,
                 @res2.elems == 1 ?? @res2[0] !! @res2;
             } elsif $res<embedding> {
                 # Assuming text embedding
-                $res<embedding><value>;
+                $res<embedding><values>;
             } else {
                 $res
             }
