@@ -33,11 +33,12 @@ our proto GeminiGenerateContent($prompt is copy,
                                 Numeric :$top-p = 1,
                                 :$top-k = Whatever,
                                 UInt :n($candidate-count) = 1,
+                                Str :$generation-method = 'generateContent',
                                 :api-key(:$auth-key) = Whatever,
                                 UInt :$timeout= 10,
                                 :$format= Whatever,
                                 Str :$method = 'tiny',
-                                Str :$base-url = 'https://generativelanguage.googleapis.com/v1beta/models'
+                                Str :$base-url = 'https://generativelanguage.googleapis.com/v1beta/models',
                                 ) is export {*}
 
 #| Gemini completion access.
@@ -54,6 +55,7 @@ multi sub GeminiGenerateContent(@messages,
                                 Numeric :$top-p = 1,
                                 :$top-k is copy = Whatever,
                                 UInt :n($candidate-count) = 1,
+                                Str :$generation-method = 'generateContent',
                                 :api-key(:$auth-key) is copy = Whatever,
                                 UInt :$timeout= 10,
                                 :$format is copy = Whatever,
@@ -130,9 +132,13 @@ multi sub GeminiGenerateContent(@messages,
 
     my %body = contents => @messages, :%generationConfig;
 
+    if $generation-method eq 'countTokens' {
+        %body<generationConfig>:delete;
+    }
+
     if !$top-k.isa(Whatever) { %body<topK> = $top-k; }
 
-    my $url = "$base-url/{ $model }:generateContent";
+    my $url = "$base-url/$model:$generation-method";
 
     #------------------------------------------------------
     # Delegate
