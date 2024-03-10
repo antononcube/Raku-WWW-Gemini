@@ -1,8 +1,10 @@
+unit module WWW::Gemini::GenerateContent;
+
 use WWW::Gemini::Models;
 use WWW::Gemini::Request;
 use JSON::Fast;
-
-unit module WWW::Gemini::GenerateContent;
+use MIME::Base64;
+use Image::Markup::Utilities;
 
 
 #============================================================
@@ -105,6 +107,19 @@ multi sub GeminiGenerateContent(@messages,
     unless 0 < $candidate-count ≤ 8;
 
     #------------------------------------------------------
+    # Process @images
+    #------------------------------------------------------
+
+    my &b64-mmd = / ^ \h* '![](data:image/' \w*? ';base64' /;
+    @images = @images.map({ $_ ~~ Str && $_ ~~ &b64-mmd ?? $_.subst(/^ \h* '![](' /).chop !! $_ });
+
+    die "The argument \@images is expected to be an empty Positional or a list of JPG image file names, image URLs, or base64 images."
+    unless !@images ||
+            [&&] @images.map({
+                $_ ~~ / ^ 'http' .? '://' / || $_.IO.e || $_ ~~ / ^ 'data:image/' \w*? ';base64' /
+            });
+
+    #------------------------------------------------------
     # Messages
     #------------------------------------------------------
 
@@ -119,9 +134,21 @@ multi sub GeminiGenerateContent(@messages,
         }
     }).Array;
 
+    if @images {
+        my $content = [
+            %( text => @messages.tail.<parts>.tail<text> ),
+            %( inline_data => @images.map({
+                %(
+                    mime_type => 'image/jpeg',
+                    data => ($_.IO.e ?? image-encode($_, type => 'jpeg') !! $_).subst(/ ^ \h* ['![](']? 'data:image/' \w* ';base64,'/)
+                ) }).tail
+            )
+        ];
+        @messages = @messages.head(*- 1).Array.push({ parts => $content });
+    }
 
     #------------------------------------------------------
-    # Messages
+    # Configuration
     #------------------------------------------------------
 
     my %generationConfig = :$temperature, topP => $top-p, candidateCount => $candidate-count;
