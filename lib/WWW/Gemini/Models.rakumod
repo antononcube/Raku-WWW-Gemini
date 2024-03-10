@@ -1,7 +1,8 @@
+unit module WWW::Gemini::Models;
+
 use HTTP::Tiny;
 use JSON::Fast;
 
-unit module WWW::Gemini::Models;
 
 
 #============================================================

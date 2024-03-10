@@ -1,7 +1,7 @@
+unit module WWW::Gemini::Request;
+
 use JSON::Fast;
 use HTTP::Tiny;
-
-unit module WWW::Gemini::Request;
 
 #============================================================
 # POST Tiny call

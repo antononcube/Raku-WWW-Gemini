@@ -1,8 +1,9 @@
+unit module WWW::Gemini::EmbedContent;
+
 use WWW::Gemini::Models;
 use WWW::Gemini::Request;
 use JSON::Fast;
 
-unit module WWW::Gemini::EmbedContent;
 
 
 #============================================================
