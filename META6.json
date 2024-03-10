@@ -9,7 +9,8 @@
   "auth": "zef:antononcube",
   "depends": [
     "HTTP::Tiny:ver<0.2.5+>",
-    "JSON::Fast:ver<0.17+>"
+    "JSON::Fast:ver<0.17+>",
+    "Image::Markup::Utilities:ver<0.1.1+>:auth<zef:antononcube>"
   ],
   "build-depends": [],
   "test-depends": [],
@@ -20,10 +21,13 @@
     "WWW::Gemini::Models": "lib/WWW/Gemini/Models.rakumod",
     "WWW::Gemini::Request": "lib/WWW/Gemini/Request.rakumod"
   },
-  "resources": [ ],
+  "resources": [
+    "ThreeHunters.jpg"
+  ],
   "license": "Artistic-2.0",
   "tags": [
     "ai",
+    "ai vision",
     "api",
     "art",
     "censorship",
@@ -32,6 +36,7 @@
     "generative",
     "transcription",
     "translation",
+    "vision",
     "web service",
     "web"
   ],
