@@ -18,7 +18,6 @@ multi sub tiny-post(Str :$url!,
             headers => { Content-Type => "application/json" },
             content => $body;
 
-    note $resp<content>.decode;
     return $resp<content>.decode;
 }
 
