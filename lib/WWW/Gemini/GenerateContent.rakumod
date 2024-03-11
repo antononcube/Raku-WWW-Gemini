@@ -3,7 +3,6 @@ unit module WWW::Gemini::GenerateContent;
 use WWW::Gemini::Models;
 use WWW::Gemini::Request;
 use JSON::Fast;
-use MIME::Base64;
 use Image::Markup::Utilities;
 
 
