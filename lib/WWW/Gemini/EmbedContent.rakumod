@@ -22,6 +22,7 @@ END
 #| Gemini completion access.
 our proto GeminiEmbedContent($prompt is copy,
                              :$model is copy = Whatever,
+                             Str :$generation-method = 'embedContent',
                              :api-key(:$auth-key) is copy = Whatever,
                              UInt :$timeout= 10,
                              :$format is copy = Whatever,
@@ -37,6 +38,7 @@ multi sub GeminiEmbedContent(@prompts, *%args) {
 #| Gemini completion access.
 multi sub GeminiEmbedContent($prompt is copy,
                              :$model is copy = Whatever,
+                             Str :$generation-method = 'embedContent',
                              :api-key(:$auth-key) is copy = Whatever,
                              UInt :$timeout= 10,
                              :$format is copy = Whatever,
@@ -69,7 +71,7 @@ multi sub GeminiEmbedContent($prompt is copy,
 
     my %body = content => $prompt;
 
-    my $url = "$base-url/{ $model }:embedContent";
+    my $url = "$base-url/$model:$generation-method";
 
     #------------------------------------------------------
     # Delegate
