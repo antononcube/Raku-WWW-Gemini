@@ -96,7 +96,7 @@ multi sub gemini-prompt(@texts, *%args) {
 
 #| Gemini maker-suite access.
 multi sub gemini-prompt($text is copy,
-                      Str :$path = 'generateText',
+                      Str :path(:$generation-method) = 'generateContent',
                       :api-key(:$auth-key) is copy = Whatever,
                       UInt :$timeout= 10,
                       :$format is copy = Whatever,
@@ -108,23 +108,23 @@ multi sub gemini-prompt($text is copy,
     # Dispatch
     #------------------------------------------------------
 
-    given $path {
+    given $generation-method {
         when $_ eq 'models' {
-            # my $url = 'https://generativelanguage.googleapis.com/v1beta2/models';
+            # my $url = 'https://generativelanguage.googleapis.com/v1beta/models';
             return gemini-models(:$auth-key, :$timeout);
         }
-        when $_ ∈ <message generateMessage message-generation> {
-            # my $url = 'https://generativelanguage.googleapis.com/v1beta2/{model=models/*}:generateMessage';
+        when $_ ∈ <generateContent generate-conent content-generation message generateMessage message-generation countTokens tokens-count> {
+            # my $url = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:generateContent';
             my $expectedKeys = <model prompt temperature top-p top-k n candidate-count context examples>;
             return gemini-generate-content($text,
                     |%args.grep({ $_.key ∈ $expectedKeys }).Hash,
-                    :$auth-key, :$timeout, :$format, :$method);
+                    :$auth-key, :$timeout, :$format, :$method, :$generation-method);
         }
-        when $_ ∈ <embed embedding embedText text-embedding text-embeddings> {
-            # my $url = 'https://generativelanguage.googleapis.com/v1beta2/{model=models/*}:embedText';
+        when $_ ∈ <embed embedding embedContent content-embedding content-embeddings embedText text-embedding text-embeddings> {
+            # my $url = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:embedContent';
             return gemini-embed-content($text,
                     |%args.grep({ $_.key ∈ <model> }).Hash,
-                    :$auth-key, :$timeout, :$format, :$method);
+                    :$auth-key, :$timeout, :$format, :$method, :$generation-method);
         }
         default {
             die 'Do not know how to process the given path.';
