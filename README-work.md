@@ -1,4 +1,4 @@
-# WWW::Gemini Raku package
+# WWW::Gemini   
 
 Raku package for connecting with [Google's Gemini](https://gemini.google.com/app).
 It is based on the Web API described in [Gemini's API documentation](https://ai.google.dev/docs/gemini_api_overview).
@@ -54,11 +54,23 @@ use Data::TypeSystem;
 
 my @vecs = gemini-embed-content(["say something nice!",
                             "shout something bad!",
-                            "wher is the best coffee made?"],
+                            "where is the best coffee made?"],
         format => 'values');
 
 say "Shape: ", deduce-type(@vecs);
 .say for @vecs;
+```
+
+### Counting tokens
+
+Here we show how to find the number of tokens in a text:
+
+```perl6
+my $text = q:to/END/;
+AI has made surprising successes but cannot solve all scientific problems due to computational irreducibility.
+END
+
+gemini-count-tokens($text, format => 'values');
 ```
 
 ### Vision
