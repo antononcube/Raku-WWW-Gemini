@@ -42,7 +42,7 @@ Show text generation:
 .say for gemini-generate-content('what is the population in Brazil?', format => 'values');
 ```
 ```
-# 215,351,056 (2023 est.)
+# 215.3 million (2023)
 ```
 
 Using a synonym function:
@@ -89,9 +89,7 @@ my @images = [$fname,];
 say gemini-generation("Give concise descriptions of the images.", :@images, format => 'values');
 ```
 ```
-# The image is a painting of three raccoons in a tree. The raccoons are surrounded by colorful butterflies. The painting is done in a realistic style, and the artist has used muted colors to create a sense of warmth and tranquility.
-# 
-# <start_of_image>Ghibli style painting of a raccoon sitting on a branch surrounded by colorful flowers and butterflies. The raccoon is looking at the viewer with a curious expression. The painting is done in a soft, muted color palette and has a dreamlike quality.
+# A family of raccoons is sitting on a tree branch in front of a colorful forest scene. The raccoons are all looking at the viewer with curious expressions on their faces. The background is a blur of green, yellow, and orange leaves. There are also several butterflies in the background.
 ```
 
 When a file name is given to the argument "images" of `gemini-completion` then 
