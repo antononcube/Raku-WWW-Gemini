@@ -29,8 +29,7 @@ multi sub tiny-post(Str :$url!,
     if $json {
         return tiny-post(:$url, body => to-json($body), :$auth-key, :$timeout);
     }
-    my $resp = HTTP::Tiny.post: $url ~ "?key={ %*ENV<GEMINI_API_KEY> // %*ENV<PALM_API_KEY> // $auth-key }",
-            content => $body;
+    my $resp = HTTP::Tiny.post: $url ~ "?key={ %*ENV<GEMINI_API_KEY> // %*ENV<PALM_API_KEY> // $auth-key }", content => $body;
     return $resp<content>.decode;
 }
 
@@ -182,8 +181,12 @@ multi sub gemini-request(Str :$url!,
             if $res<candidates>:exists {
                 # Assuming text completion
                 my @res2 = $res<candidates>.map({
-                    my @t = $_<content><parts>.map({ $_.<text> });
-                    @t.elems == 1 ?? @t[0] !! @t
+                    if $_<content> {
+                        my @t = $_<content><parts>.map({ $_<text> });
+                        @t.elems == 1 ?? @t[0] !! @t
+                    } else {
+                        "No content, finish reason: {$_<finishReason>}";
+                    }
                 }).Array;
                 @res2.elems == 1 ?? @res2[0] !! @res2;
             } elsif $res<embedding> {
