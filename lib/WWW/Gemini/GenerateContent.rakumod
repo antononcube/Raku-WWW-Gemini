@@ -31,6 +31,7 @@ our proto GeminiGenerateContent($prompt is copy,
                                 :@images is copy = Empty,
                                 :$role = Whatever,
                                 :$model = Whatever,
+                                :max-tokens(:$max-output-tokens) is copy = Whatever,
                                 :$temperature = Whatever,
                                 Numeric :$top-p = 1,
                                 :$top-k = Whatever,
@@ -53,6 +54,7 @@ multi sub GeminiGenerateContent(@messages,
                                 :@images is copy = Empty,
                                 :$role is copy = Whatever,
                                 :$model is copy = Whatever,
+                                :max-tokens(:$max-output-tokens) is copy = Whatever,
                                 :$temperature is copy = Whatever,
                                 Numeric :$top-p = 1,
                                 :$top-k is copy = Whatever,
@@ -79,6 +81,13 @@ multi sub GeminiGenerateContent(@messages,
     if $model.isa(Whatever) { $model = @images ?? 'gemini-pro-vision' !! 'gemini-pro'; }
     die "The argument \$model is expected to be Whatever or one of the strings: { '"' ~ gemini-known-models.keys.sort.join('", "') ~ '"' }."
     unless $model ∈ gemini-known-models;
+
+    #------------------------------------------------------
+    # Process $max-output-tokens
+    #------------------------------------------------------
+    if $max-output-tokens.isa(Whatever) { $max-output-tokens = 512; }
+    die "The argument \$max-output-tokens is expected to be Whatever or a positive integer."
+    unless $max-output-tokens ~~ Int && 0 < $max-output-tokens;
 
     #------------------------------------------------------
     # Process $temperature
@@ -151,7 +160,10 @@ multi sub GeminiGenerateContent(@messages,
     # Configuration
     #------------------------------------------------------
 
-    my %generationConfig = :$temperature, topP => $top-p, candidateCount => $candidate-count;
+    my %generationConfig = :$temperature,
+                           topP => $top-p,
+                           candidateCount => $candidate-count,
+                           maxOutputTokens => $max-output-tokens;
 
     #------------------------------------------------------
     # Make Gemini URL
