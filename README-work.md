@@ -45,6 +45,8 @@ Using a synonym function:
 .say for gemini-generation('Who wrote the book "Dune"?');
 ```
 
+### Embeddings
+
 Show text embeddings:
 
 ```perl6
@@ -58,6 +60,24 @@ my @vecs = gemini-embed-content(["say something nice!",
 say "Shape: ", deduce-type(@vecs);
 .say for @vecs;
 ```
+
+### Vision
+
+If the function `gemini-completion` is given a list of images, textual results corresponding to those images is returned.
+The argument "images" is a list of image URLs, image file names, or image Base64 representations. (Any combination of those element types.)
+
+Here is an example with three images:
+
+```perl6
+my $fname = $*CWD ~ '/resources/ThreeHunters.jpg';
+my @images = [$fname,];
+say gemini-generation("Give concise descriptions of the images.", :@images, format => 'values');
+```
+
+When a file name is given to the argument "images" of `gemini-completion` then 
+the function `encode-image` of 
+["Image::Markup::Utilities"](https://raku.land/zef:antononcube/Image::Markup::Utilities), [AAp4],
+is applied to it.
 
 
 -------
@@ -115,16 +135,6 @@ graph TD
 
 ------
 
-## TODO
-
-- [ ] TODO Implement moderations.
-- [X] DONE Comparison with "WWW::OpenAI", [AAp1].
-  - The comparison is done via workflows with "LLM::Functions", [AAp3]
-- [X] DONE Hook-up finding textual answers implemented in "WWW::OpenAI", [AAp1].
-  - There is a dedicated package for this now -- see "ML::FindTextualAnswer", [AAp4]. 
-
-------
-
 ## References
 
 
@@ -163,8 +173,11 @@ graph TD
 [GitHub/antononcube](https://github.com/antononcube).
 
 [AAp4] Anton Antonov,
-[ML::FindTextualAnswer Raku package](https://github.com/antononcube/Raku-ML-FindTextualAnswer),
+[Image::Markup::Utilities Raku package](https://github.com/antononcube/Raku-Image-Markup-Utilities),
 (2023-2024),
 [GitHub/antononcube](https://github.com/antononcube).
 
-[OAI1] OpenAI Platform, [OpenAI platform](https://platform.openai.com/).
+[AAp5] Anton Antonov,
+[ML::FindTextualAnswer Raku package](https://github.com/antononcube/Raku-ML-FindTextualAnswer),
+(2023-2024),
+[GitHub/antononcube](https://github.com/antononcube).
