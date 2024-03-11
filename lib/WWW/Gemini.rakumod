@@ -27,6 +27,7 @@ multi sub gemini-generation(**@args, *%args) {
 #| C<:$top-p> -- top probability of tokens to use in the answer;
 #| C<$top-k> -- top-K top tokens to use;
 #| C<:n($candidate-count)> -- number of answers;
+#| C<:$generation-method)> -- generation method;
 #| C<:api-key($auth-key)> -- authorization key (API key);
 #| C<:$timeout> -- timeout;
 #| C<:$format> -- format to use in answers post processing, one of <values json hash asis>);
@@ -36,6 +37,17 @@ our proto gemini-generate-content(|) is export {*}
 
 multi sub gemini-generate-content(**@args, *%args) {
     return WWW::Gemini::GenerateContent::GeminiGenerateContent(|@args, |%args);
+}
+
+#===========================================================
+#| Gemini count tokens.
+#| Takes the same arguments as gemini-generate-content(|).
+our proto gemini-count-tokens(|) is export {*}
+
+multi sub gemini-count-tokens(**@args, *%args) {
+    my %args2 = %args.clone;
+    %args2<generation-method> = 'countTokens';
+    return WWW::Gemini::GenerateContent::GeminiGenerateContent(|@args, |%args2);
 }
 
 #===========================================================

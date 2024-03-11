@@ -192,6 +192,9 @@ multi sub gemini-request(Str :$url!,
             } elsif $res<embedding> {
                 # Assuming text embedding
                 $res<embedding><values>;
+            } elsif $res<totalTokens> {
+                # Assuming token counting
+                $res<totalTokens>;
             } else {
                 $res
             }
