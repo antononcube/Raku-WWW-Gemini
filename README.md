@@ -42,7 +42,7 @@ Show text generation:
 .say for gemini-generate-content('what is the population in Brazil?', format => 'values');
 ```
 ```
-# 215.3 million (2023 est.)
+# 215.3 million (2023)
 ```
 
 Using a synonym function:
@@ -89,14 +89,13 @@ my @images = [$fname,];
 say gemini-generation("Give concise descriptions of the images.", :@images, format => 'values');
 ```
 ```
-# A painting of three raccoons in a tree. The raccoons are surrounded by colorful butterflies. The background is a forest with a blue sky.
+# The image shows a family of raccoons in a tree. The mother raccoon is watching over her two cubs. The cubs are playing with each other. There are butterflies flying around the tree. The leaves on the tree are turning brown and orange.
 ```
 
 When a file name is given to the argument "images" of `gemini-completion` then 
 the function `encode-image` of 
 ["Image::Markup::Utilities"](https://raku.land/zef:antononcube/Image::Markup::Utilities), [AAp4],
 is applied to it.
-
 
 
 -------
