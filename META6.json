@@ -1,7 +1,7 @@
 {
   "name": "WWW::Gemini",
   "description": "WWW::Gemini provides access to the Google's Gemini.",
-  "version": "0.1.0",
+  "version": "0.0.7",
   "raku": "6.d",
   "authors": [
     "Anton Antonov"
@@ -40,6 +40,6 @@
     "web service",
     "web"
   ],
-  "api": "1",
+  "api": "0",
   "source-url": "https://github.com/antononcube/Raku-WWW-Gemini"
 }
