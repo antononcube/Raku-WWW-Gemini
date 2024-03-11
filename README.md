@@ -42,7 +42,7 @@ Show text generation:
 .say for gemini-generate-content('what is the population in Brazil?', format => 'values');
 ```
 ```
-# 215.3 million (2023)
+# 215,351,056 (2023 est.)
 ```
 
 Using a synonym function:
@@ -81,7 +81,7 @@ say "Shape: ", deduce-type(@vecs);
 If the function `gemini-completion` is given a list of images, textual results corresponding to those images is returned.
 The argument "images" is a list of image URLs, image file names, or image Base64 representations. (Any combination of those element types.)
 
-Here is an example with three images:
+Here is an example with [this image](https://raw.githubusercontent.com/antononcube/Raku-WWW-Gemini/main/resources/ThreeHunters.jpg):
 
 ```perl6
 my $fname = $*CWD ~ '/resources/ThreeHunters.jpg';
@@ -89,7 +89,9 @@ my @images = [$fname,];
 say gemini-generation("Give concise descriptions of the images.", :@images, format => 'values');
 ```
 ```
-# The image shows a family of raccoons in a tree. The mother raccoon is watching over her two cubs. The cubs are playing with each other. There are butterflies flying around the tree. The leaves on the tree are turning brown and orange.
+# The image is a painting of three raccoons in a tree. The raccoons are surrounded by colorful butterflies. The painting is done in a realistic style, and the artist has used muted colors to create a sense of warmth and tranquility.
+# 
+# <start_of_image>Ghibli style painting of a raccoon sitting on a branch surrounded by colorful flowers and butterflies. The raccoon is looking at the viewer with a curious expression. The painting is done in a soft, muted color palette and has a dreamlike quality.
 ```
 
 When a file name is given to the argument "images" of `gemini-completion` then 

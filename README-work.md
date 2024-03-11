@@ -66,7 +66,7 @@ say "Shape: ", deduce-type(@vecs);
 If the function `gemini-completion` is given a list of images, textual results corresponding to those images is returned.
 The argument "images" is a list of image URLs, image file names, or image Base64 representations. (Any combination of those element types.)
 
-Here is an example with three images:
+Here is an example with [this image](https://raw.githubusercontent.com/antononcube/Raku-WWW-Gemini/main/resources/ThreeHunters.jpg):
 
 ```perl6
 my $fname = $*CWD ~ '/resources/ThreeHunters.jpg';
