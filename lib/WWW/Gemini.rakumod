@@ -14,7 +14,7 @@ use WWW::Gemini::Models;
 #| C<*%args> -- additional arguments, see C<gemini-generate-content> and C<gemini-generate-text>.
 our proto gemini-generation(|) is export {*}
 
-multi sub gemini-generation(*@args, *%args) {
+multi sub gemini-generation(**@args, *%args) {
     return gemini-generate-content(|@args, |%args);
 }
 
