@@ -1,9 +1,6 @@
 #!/usr/bin/env raku
 use v6.d;
 
-use lib '.';
-use lib './lib';
-
 use HTTP::Tiny;
 use JSON::Fast;
 use WWW::Gemini;

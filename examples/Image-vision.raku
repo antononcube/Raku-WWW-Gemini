@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 use v6.d;
 
-use lib '.';
-use lib './lib';
 
 use Image::Markup::Utilities;
 use WWW::Gemini;
