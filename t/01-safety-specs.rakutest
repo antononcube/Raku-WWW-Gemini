@@ -1,0 +1,33 @@
+use lib <. lib>;
+
+use WWW::Gemini::Request;
+use Test;
+
+## 1
+isa-ok safety-spec-whatever, Positional;
+
+## 2
+my @spec2 = [{ category => 'HARM_CATEGORY_HATE_SPEECH', threshold => 'BLOCK_MEDIUM_AND_ABOVE' },];
+isa-ok safety-spec-set(@spec2, 'BLOCK_ONLY_HIGH'), Positional;
+
+## 3
+is
+        safety-spec-set(@spec2, 'BLOCK_ONLY_HIGH'),
+        safety-spec-set(@spec2, 'ONLY_HIGH'),
+        "Automatic BLOCK_ prefix";
+
+## 4
+is
+        safety-spec-convert({HARM_CATEGORY_HATE_SPEECH => 'BLOCK_MEDIUM_AND_ABOVE'}),
+        @spec2,
+        "Map converions to safety spec";
+
+## 5
+isa-ok safety-spec-all-at('BLOCK_LOW_AND_ABOVE'), Positional;
+
+## 6
+is
+        safety-spec-all-at('BLOCK_LOW_AND_ABOVE').map(*<category>).sort.Array,
+        @WWW::Gemini::Request::safety-categories.sort.Array;
+
+done-testing;
