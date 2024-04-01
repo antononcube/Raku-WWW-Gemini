@@ -4,6 +4,68 @@ use JSON::Fast;
 use HTTP::Tiny;
 
 #============================================================
+# Safety settings
+#============================================================
+
+#`[
+  "safety_settings": [
+    {
+      "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_LOW_AND_ABOVE"
+    },
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+      "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+      "threshold": "BLOCK_ONLY_HIGH"
+    }
+  ]
+]
+
+our @safety-categories = <HARM_CATEGORY_SEXUALLY_EXPLICIT HARM_CATEGORY_HATE_SPEECH HARM_CATEGORY_HARASSMENT HARM_CATEGORY_DANGEROUS_CONTENT>;
+our @safety-thresholds = <BLOCK_NONE BLOCK_LOW_AND_ABOVE BLOCK_MEDIUM_AND_ABOVE BLOCK_ONLY_HIGH>;
+
+sub safety-spec-whatever() is export {
+    my @res = @safety-categories.map({ %( category => $_, threshold => 'BLOCK_NONE' ) }).Array;
+    return @res;
+}
+
+proto sub safety-spec-set(@sspec, $val) is export {*}
+
+multi sub safety-spec-set(@sspec, Str $th is copy) {
+    if !$th.starts-with('BLOCK_') {
+        $th = 'BLOCK_' ~ $th.uc;
+    }
+    die "The second argument is exepcted to be a string, one of: <{@safety-thresholds.join(', ')}>."
+    unless $th ∈ @safety-thresholds;
+
+    my @sspec2;
+    for @sspec -> $e {
+        die 'The first argument is expected to be a list of maps, each map with keys "category" and "threshold".'
+        unless ($e ~~ Map) && ($e<category>:exists);
+
+        @sspec2.push( %( category => $e<category>, threshold => $th) );
+    }
+
+    return @sspec2;
+}
+
+sub safety-spec-all-at($spec) is export {
+    return safety-spec-set(safety-spec-whatever, $spec);
+}
+
+sub safety-spec-convert(%spec) is export {
+    my @res = %spec.map({ %( category => $_.key, threshold => $_.value ) });
+    return @res;
+}
+
+#============================================================
 # POST Tiny call
 #============================================================
 

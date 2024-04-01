@@ -127,7 +127,7 @@ multi sub gemini-prompt($text is copy,
         }
         when $_ ∈ <generateContent generate-conent content-generation message generateMessage message-generation countTokens tokens-count> {
             # my $url = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:generateContent';
-            my $expectedKeys = <model prompt temperature top-p top-k n candidate-count context examples>;
+            my $expectedKeys = <model prompt temperature top-p top-k n candidate-count context examples safety-settings>;
             return gemini-generate-content($text,
                     |%args.grep({ $_.key ∈ $expectedKeys }).Hash,
                     :$auth-key, :$timeout, :$format, :$method, :$generation-method);

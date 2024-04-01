@@ -36,6 +36,7 @@ our proto GeminiGenerateContent($prompt is copy,
                                 :$top-k = Whatever,
                                 UInt :n($candidate-count) = 1,
                                 Str :$generation-method = 'generateContent',
+                                :$safety-settings = Whatever,
                                 :api-key(:$auth-key) = Whatever,
                                 UInt :$timeout= 10,
                                 :$format= Whatever,
@@ -59,6 +60,7 @@ multi sub GeminiGenerateContent(@messages,
                                 :$top-k is copy = Whatever,
                                 UInt :n($candidate-count) = 1,
                                 Str :$generation-method = 'generateContent',
+                                :$safety-settings is copy = Whatever,
                                 :api-key(:$auth-key) is copy = Whatever,
                                 UInt :$timeout= 10,
                                 :$format is copy = Whatever,
@@ -113,6 +115,19 @@ multi sub GeminiGenerateContent(@messages,
     #------------------------------------------------------
     die "The argument \$candidate-count is expected to be a positive integer."
     unless 0 < $candidate-count ≤ 8;
+
+    #------------------------------------------------------
+    # Process $safety-settings
+    #------------------------------------------------------
+    $safety-settings = do given $safety-settings {
+        when Str:D { safety-spec-all-at($safety-settings) }
+        when Whatever { safety-spec-whatever; }
+        when Map { [$safety-settings,] }
+        default { $safety-settings }
+    }
+
+    die "The argument \$safety-settings is expected to be a string, a map, a list of maps, or Whatever."
+    unless $safety-settings ~~ Positional && $safety-settings.all ~~ Map;
 
     #------------------------------------------------------
     # Process @images
@@ -172,6 +187,10 @@ multi sub GeminiGenerateContent(@messages,
 
     if $generation-method eq 'countTokens' {
         %body<generationConfig>:delete;
+    }
+
+    if $safety-settings {
+        %body<safety_settings> = $safety-settings;
     }
 
     if !$top-k.isa(Whatever) { %body<topK> = $top-k; }
