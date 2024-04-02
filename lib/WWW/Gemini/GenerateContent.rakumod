@@ -185,12 +185,13 @@ multi sub GeminiGenerateContent(@messages,
 
     my %body = contents => @messages, :%generationConfig;
 
-    if $generation-method eq 'countTokens' {
-        %body<generationConfig>:delete;
-    }
-
     if $safety-settings {
         %body<safety_settings> = $safety-settings;
+    }
+
+    if $generation-method eq 'countTokens' {
+        %body<generationConfig>:delete;
+        %body<safety_settings>:delete;
     }
 
     if !$top-k.isa(Whatever) { %body<topK> = $top-k; }
