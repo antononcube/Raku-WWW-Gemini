@@ -3,8 +3,8 @@
   "name": "WWW::Gemini",
   "api": "0",
   "auth": "zef:antononcube",
-  "version": "0.0.10",
-  "description": "WWW::Gemini provides access to Google's Gemini.",
+  "version": "0.0.11",
+  "description": "WWW::Gemini provides access to Google's Gemini LLM models.",
   "authors": [
     "Anton Antonov"
   ],
