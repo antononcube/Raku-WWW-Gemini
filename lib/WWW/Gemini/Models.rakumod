@@ -10,7 +10,7 @@ use JSON::Fast;
 #============================================================
 # https://ai.google.dev/models/gemini
 
-my $knownModels = Set.new(<gemini-pro gemini-1.0-pro-001 gemini-1.0-pro gemini-1.0-pro-latest gemini-1.5-pro-latest gemini-pro-vision embedding-001 aqa>);
+my $knownModels = Set.new(<gemini-pro gemini-1.0-pro-001 gemini-1.0-pro gemini-1.0-pro-latest gemini-1.5-pro-latest gemini-pro-vision embedding-001 text-embedding-004 text-embedding-preview-0409 aqa>);
 
 
 our sub gemini-known-models() is export {
@@ -25,7 +25,7 @@ our sub gemini-known-models() is export {
 # https://ai.google.dev/models/gemini
 
 my %endPointToModels =
-        'embedContent' => <embedding-001>,
+        'embedContent' => <embedding-001 text-embedding-004 text-embedding-preview-0409>,
         'generateContent' => <gemini-pro gemini-1.0-pro-001 gemini-1.0-pro gemini-1.0-pro-latest gemini-1.5-pro-latest gemini-pro-vision>,
         'generateAnswer' => <aqa>;
 

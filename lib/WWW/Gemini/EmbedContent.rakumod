@@ -20,9 +20,10 @@ END
 
 
 #| Gemini completion access.
-our proto GeminiEmbedContent($prompt is copy,
+our proto GeminiEmbedContent($content is copy,
                              :$model is copy = Whatever,
                              Str :$generation-method = 'embedContent',
+                             :$task-type = Whatever,
                              :api-key(:$auth-key) is copy = Whatever,
                              UInt :$timeout= 10,
                              :$format is copy = Whatever,
@@ -31,14 +32,15 @@ our proto GeminiEmbedContent($prompt is copy,
                              ) is export {*}
 
 #| Gemini completion access.
-multi sub GeminiEmbedContent(@prompts, *%args) {
-    return @prompts.map({ GeminiEmbedContent($_, |%args) });
+multi sub GeminiEmbedContent(@contents, *%args) {
+    return @contents.map({ GeminiEmbedContent($_, |%args) });
 }
 
 #| Gemini completion access.
-multi sub GeminiEmbedContent($prompt is copy,
+multi sub GeminiEmbedContent($content is copy,
                              :$model is copy = Whatever,
                              Str :$generation-method = 'embedContent',
+                             :$task-type is copy = Whatever,
                              :api-key(:$auth-key) is copy = Whatever,
                              UInt :$timeout= 10,
                              :$format is copy = Whatever,
@@ -46,14 +48,14 @@ multi sub GeminiEmbedContent($prompt is copy,
                              Str :$base-url = 'https://generativelanguage.googleapis.com/v1beta/models') {
 
     #------------------------------------------------------
-    # Process $prompt
+    # Process $content
     #------------------------------------------------------
-    $prompt = do given $prompt {
+    $content = do given $content {
         when Str {
             %(parts => [%( text => $_), ]);
         }
         when ($_ ~~ Iterable) && $_.all ~~ Str {
-            %(parts => $_.map({ %(text => $prompt) }) );
+            %(parts => $_.map({ %(text => $content) }) );
         }
     }
 
@@ -66,10 +68,18 @@ multi sub GeminiEmbedContent($prompt is copy,
     unless $model ∈ gemini-known-models;
 
     #------------------------------------------------------
+    # Process $task-type
+    #------------------------------------------------------
+
+    if $task-type.isa(Whatever) { $task-type = 'RETRIEVAL_DOCUMENT'; }
+    die "The argument \$task-type is expected to be Whatever or one of the strings: { '"' ~ @WWW::Gemini::Request::embedding-task-types.join('", "') ~ '"' }."
+    unless $task-type ∈ @WWW::Gemini::Request::embedding-task-types;
+
+    #------------------------------------------------------
     # Make Gemini URL
     #------------------------------------------------------
 
-    my %body = content => $prompt;
+    my %body = content => $content, taskType => $task-type;
 
     my $url = "$base-url/$model:$generation-method";
 

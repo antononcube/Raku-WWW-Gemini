@@ -52,6 +52,13 @@ multi sub gemini-count-tokens(**@args, *%args) {
 
 #===========================================================
 #| Gemini embeddings access.
+#| C<$content> -- content (text) to find the embedding of;
+#| C<:$model> -- embedding model;
+#| C<:$task-type> -- task type;
+#| C<:api-key(:$auth-key)> -- authorization key (API key);
+#| C<:timeout> -- timeout
+#| C<:$format> -- format to use in answers post processing, one of <values json hash asis>);
+#| C<:$method> -- method to WWW API call with, one of <curl tiny>.
 our proto gemini-embed-content(|) is export {*}
 
 multi sub gemini-embed-content(**@args, *%args) {

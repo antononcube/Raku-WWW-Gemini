@@ -28,8 +28,8 @@ use HTTP::Tiny;
   ]
 ]
 
-our @safety-categories = <HARM_CATEGORY_SEXUALLY_EXPLICIT HARM_CATEGORY_HATE_SPEECH HARM_CATEGORY_HARASSMENT HARM_CATEGORY_DANGEROUS_CONTENT>;
-our @safety-thresholds = <BLOCK_NONE BLOCK_LOW_AND_ABOVE BLOCK_MEDIUM_AND_ABOVE BLOCK_ONLY_HIGH>;
+our constant @safety-categories = <HARM_CATEGORY_SEXUALLY_EXPLICIT HARM_CATEGORY_HATE_SPEECH HARM_CATEGORY_HARASSMENT HARM_CATEGORY_DANGEROUS_CONTENT>;
+our constant @safety-thresholds = <BLOCK_NONE BLOCK_LOW_AND_ABOVE BLOCK_MEDIUM_AND_ABOVE BLOCK_ONLY_HIGH>;
 
 sub safety-spec-whatever() is export {
     my @res = @safety-categories.map({ %( category => $_, threshold => 'BLOCK_NONE' ) }).Array;
@@ -64,6 +64,13 @@ sub safety-spec-convert(%spec) is export {
     my @res = %spec.map({ %( category => $_.key, threshold => $_.value ) });
     return @res;
 }
+
+#============================================================
+# Embedding task types
+#============================================================
+
+our constant @embedding-task-types = <RETRIEVAL_QUERY RETRIEVAL_DOCUMENT SEMANTIC_SIMILARITY CLASSIFICATION CLUSTERING>;
+
 
 #============================================================
 # POST Tiny call
