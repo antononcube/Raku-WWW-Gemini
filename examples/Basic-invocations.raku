@@ -5,12 +5,13 @@ use HTTP::Tiny;
 use JSON::Fast;
 use WWW::Gemini;
 
-
+#`[
 my $res1 = gemini-generate-content(
         "Write a story with less than 200 words about a magic cigarette.",
         format => 'values', n => 1, max-tokens => 30);
 
 say $res1;
+]
 
 #`[
 my $res2 = gemini-generate-content(
@@ -21,14 +22,16 @@ my $res2 = gemini-generate-content(
 say $res2;
 ]
 
-#`[
 
-my $res3 = gemini-embed-content(
-        [
-            "Write a story with less than 200 words about a magic cigarette.",
-            "What cigarrettes are most popular.",
-        ],
+my @queries3 = [
+        "Write a story with less than 200 words about a magic cigarette.",
+        "What cigarrettes are most popular.",
+];
+
+say gemini-embed-content(@queries3,
+        task-type => 'RETRIEVAL_DOCUMENT',
         format => 'values');
 
-say $res3;
-]
+say gemini-embed-content(@queries3,
+        task-type => 'RETRIEVAL_QUERY',
+        format => 'values');
