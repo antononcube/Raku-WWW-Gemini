@@ -79,6 +79,9 @@ multi sub GeminiGenerateContent(@messages,
     #------------------------------------------------------
     # Process $model
     #------------------------------------------------------
+    # As state in Gemini's API documentation:
+    # Note: gemini-pro is an alias for gemini-1.0-pro.
+    # https://ai.google.dev/gemini-api/docs/models/gemini#gemini-1.0-pro
     if $model.isa(Whatever) { $model = @images ?? 'gemini-pro-vision' !! 'gemini-pro'; }
     die "The argument \$model is expected to be Whatever or one of the strings: { '"' ~ gemini-known-models.keys.sort.join('", "') ~ '"' }."
     unless $model ∈ gemini-known-models;
