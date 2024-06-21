@@ -79,7 +79,7 @@ multi sub GeminiEmbedContent($content is copy,
     # Make Gemini URL
     #------------------------------------------------------
 
-    my %body = content => $content, taskType => $task-type;
+    my %body = :$content, taskType => $task-type;
 
     my $url = "$base-url/$model:$generation-method";
 
