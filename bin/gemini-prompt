@@ -21,7 +21,7 @@ multi sub gemini-front(Str $text,                                   #= Text to b
                      Str :$method is copy = 'tiny',               #= Method for the HTTP POST query; one of "tiny" or "curl".
                      ) {
 
-    if $text.chars == 0 {
+    if $text.chars == 0 && $path.lc ne 'models' {
         note 'Nothing.';
         return;
     }
