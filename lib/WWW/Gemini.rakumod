@@ -115,7 +115,7 @@ multi sub gemini-prompt(@texts, *%args) {
 
 #| Gemini maker-suite access.
 multi sub gemini-prompt($text is copy,
-                      Str :path(:$generation-method) = 'generateContent',
+                      Str :path(:$generation-method) is copy = 'generateContent',
                       :api-key(:$auth-key) is copy = Whatever,
                       UInt :$timeout= 10,
                       :$format is copy = Whatever,
@@ -134,6 +134,7 @@ multi sub gemini-prompt($text is copy,
         }
         when $_ ∈ <generateContent generate-conent content-generation message generateMessage message-generation countTokens tokens-count> {
             # my $url = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:generateContent';
+            $generation-method = 'generateContent';
             my $expectedKeys = <model prompt temperature top-p top-k n candidate-count context examples safety-settings>;
             return gemini-generate-content($text,
                     |%args.grep({ $_.key ∈ $expectedKeys }).Hash,
@@ -141,6 +142,7 @@ multi sub gemini-prompt($text is copy,
         }
         when $_ ∈ <embed embedding embedContent content-embedding content-embeddings embedText text-embedding text-embeddings> {
             # my $url = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:embedContent';
+            $generation-method = 'embedContent';
             return gemini-embed-content($text,
                     |%args.grep({ $_.key ∈ <model> }).Hash,
                     :$auth-key, :$timeout, :$format, :$method, :$generation-method);
