@@ -15,8 +15,11 @@ my $knownModels = Set.new(
          gemini-1.0-pro-001 gemini-1.0-pro gemini-1.0-pro-latest
          gemini-1.5-pro-001 gemini-1.5-pro gemini-1.5-pro-latest
          gemini-1.5-flash-001 gemini-1.5-flash gemini-1.5-flash-latest gemini-1.5-flash-8b
-         embedding-001 text-embedding-004 text-embedding-preview-0409
-         aqa>);
+         gemini-2.0-pro-exp gemini-2.0-pro-exp-02-05
+         gemini-2.0-flash gemini-2.0-flash-lite
+         gemini-2.0-flash-001 gemini-2.0-flash-exp gemini-2.0-flash-thinking-exp-01-21
+         embedding-001 text-embedding-004 text-embedding-preview-0409 gemini-embedding-exp
+         aqa imagen-3.0-generate-002>);
 
 
 our sub gemini-known-models() is export {
@@ -31,14 +34,18 @@ our sub gemini-known-models() is export {
 # https://ai.google.dev/models/gemini
 
 my %endPointToModels =
-        'embedContent' => <embedding-001 text-embedding-004 text-embedding-preview-0409>,
+        'embedContent' => <embedding-001 text-embedding-004 text-embedding-preview-0409 gemini-embedding-exp>,
         'generateContent' =>
                 <gemini-pro
                  gemini-1.0-pro-001 gemini-1.0-pro gemini-1.0-pro-latest
                  gemini-1.5-pro-001 gemini-1.5-pro gemini-1.5-pro-latest
                  gemini-1.5-flash-001 gemini-1.5-flash gemini-1.5-flash-latest
+                 gemini-2.0-pro-exp gemini-2.0-pro-exp-02-05
+                 gemini-2.0-flash gemini-2.0-flash-lite
+                 gemini-2.0-flash-001 gemini-2.0-flash-exp gemini-2.0-flash-thinking-exp-01-21
                  gemini-pro-vision gemini-pro-vision-latest>,
-        'generateAnswer' => <aqa>;
+        'generateAnswer' => <aqa>,
+        'generateImage' => <imagen-3.0-generate-002>;
 
 #| End-point to models retrieval.
 proto sub gemini-end-point-to-models(|) is export {*}

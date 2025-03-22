@@ -5,7 +5,6 @@ use WWW::Gemini::Request;
 use JSON::Fast;
 use Image::Markup::Utilities;
 
-
 #============================================================
 # Message generation
 #============================================================
@@ -59,7 +58,7 @@ multi sub GeminiGenerateContent(@messages,
                                 Numeric :$top-p = 1,
                                 :$top-k is copy = Whatever,
                                 UInt :n(:$candidate-count) = 1,
-                                Str :$generation-method = 'generateContent',
+                                Str :$generation-method is copy = 'generateContent',
                                 :$safety-settings is copy = Whatever,
                                 :api-key(:$auth-key) is copy = Whatever,
                                 UInt :$timeout= 10,
@@ -82,14 +81,15 @@ multi sub GeminiGenerateContent(@messages,
     # As state in Gemini's API documentation:
     # Note: gemini-pro is an alias for gemini-1.0-pro.
     # https://ai.google.dev/gemini-api/docs/models/gemini#gemini-1.0-pro
-    if $model.isa(Whatever) { $model = @images ?? 'gemini-pro-vision' !! 'gemini-pro'; }
+    #if $model.isa(Whatever) { $model = @images ?? 'gemini-pro-vision' !! 'gemini-2.0-flash'; }
+    if $model.isa(Whatever) { $model = $generation-method eq 'generateImage' ?? 'gemini-2.0-flash' !! 'gemini-2.0-flash-lite'; }
     die "The argument \$model is expected to be Whatever or one of the strings: { '"' ~ gemini-known-models.keys.sort.join('", "') ~ '"' }."
     unless $model ∈ gemini-known-models;
 
     #------------------------------------------------------
     # Process $max-output-tokens
     #------------------------------------------------------
-    if $max-output-tokens.isa(Whatever) { $max-output-tokens = 512; }
+    if $max-output-tokens.isa(Whatever) { $max-output-tokens = 1024; }
     die "The argument \$max-output-tokens is expected to be Whatever or a positive integer."
     unless $max-output-tokens ~~ Int && 0 < $max-output-tokens;
 
