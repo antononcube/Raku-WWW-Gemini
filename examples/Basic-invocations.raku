@@ -35,3 +35,6 @@ say gemini-embed-content(@queries3,
 say gemini-embed-content(@queries3,
         task-type => 'RETRIEVAL_QUERY',
         format => 'values');
+
+
+say gemini-count-tokens(@queries3, format => 'values');
