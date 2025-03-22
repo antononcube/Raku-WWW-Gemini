@@ -147,6 +147,19 @@ graph TD
 
 ------
 
+## TODO
+
+- [ ] TODO Implementation
+  - [ ] TODO Image generation
+  - [ ] TODO Image editing
+- [ ] TODO Documentation
+  - [ ] DONE Core functionalities
+  - [ ] TODO Image generation
+  - [ ] TODO Comparison of OpenAI vs Google image generation
+  - [ ] TODO Thinking model(s) demo
+
+------
+
 ## References
 
 
