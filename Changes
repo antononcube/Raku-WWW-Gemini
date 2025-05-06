@@ -2,6 +2,9 @@ Revision history for WWW-Gemini
 
 {{$NEXT}}
 
+0.0.16  2025-05-06
+    - Added new models gemini-2.5-*.
+    - Added the option :@tools.
 0.0.8   2023-03-11
     - Better README. Implemented and documented gemini-count-tokens().
 0.0.7   2023-03-11
