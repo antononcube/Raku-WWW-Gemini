@@ -36,6 +36,7 @@ our proto GeminiGenerateContent($prompt is copy,
                                 UInt :n(:$candidate-count) = 1,
                                 Str :$generation-method = 'generateContent',
                                 :$safety-settings = Whatever,
+                                :@tools = Empty,
                                 :api-key(:$auth-key) = Whatever,
                                 UInt :$timeout= 10,
                                 :$format= Whatever,
@@ -60,6 +61,7 @@ multi sub GeminiGenerateContent(@messages,
                                 UInt :n(:$candidate-count) = 1,
                                 Str :$generation-method is copy = 'generateContent',
                                 :$safety-settings is copy = Whatever,
+                                :@tools = Empty,
                                 :api-key(:$auth-key) is copy = Whatever,
                                 UInt :$timeout= 10,
                                 :$format is copy = Whatever,
@@ -195,6 +197,10 @@ multi sub GeminiGenerateContent(@messages,
     if $generation-method eq 'countTokens' {
         %body<generationConfig>:delete;
         %body<safety_settings>:delete;
+    }
+
+    if @tools {
+        %body<tools> = @tools;
     }
 
     if !$top-k.isa(Whatever) { %body<topK> = $top-k; }
