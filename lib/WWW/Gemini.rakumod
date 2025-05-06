@@ -27,7 +27,9 @@ multi sub gemini-generation(**@args, *%args) {
 #| C<:$top-p> -- top probability of tokens to use in the answer;
 #| C<$top-k> -- top-K top tokens to use;
 #| C<:n($candidate-count)> -- number of answers;
-#| C<:$generation-method)> -- generation method;
+#| C<:$generation-method> -- generation method;
+#| C<:$safety-settings> -- safety settings;
+#| C<:@tools> -- function calling specs (i.e. tools);
 #| C<:api-key($auth-key)> -- authorization key (API key);
 #| C<:$timeout> -- timeout;
 #| C<:$format> -- format to use in answers post processing, one of <values json hash asis>);
