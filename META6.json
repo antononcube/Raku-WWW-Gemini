@@ -1,7 +1,7 @@
 {
     "name": "WWW::Gemini",
     "description": "WWW::Gemini provides access to Google's Gemini LLM models.",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "raku": "6.d",
     "authors": [
         "Anton Antonov"
