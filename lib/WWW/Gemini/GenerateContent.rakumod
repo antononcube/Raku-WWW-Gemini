@@ -153,11 +153,20 @@ multi sub GeminiGenerateContent(@messages,
 
     @messages = @messages.map(-> $r {
         given $r {
-            when $_ ~~ Pair {
-                %(role => $_.key, parts => [ %( text => $_.value), ])
+            when $_ ~~ Pair:D {
+                %(role => $_.key, parts => [%( text => $_.value),])
+            }
+            when $_ ~~ Map:D && ($_<role>:exists) {
+                # Not making checks like  ($_<role>:exists) && ($_<parts>:exists)
+                # because tool workflows might attach messages with keys like <type call_id output>.
+                $_
+            }
+            when $_ ~~ Map:D {
+                note "Potentially problematic message: no role specified.";
+                $_
             }
             default {
-                %(:$role, parts => [ %(text => $_.Str),])
+                %(:$role, parts => [%(text => $_.Str),])
             }
         }
     }).Array;
@@ -200,7 +209,7 @@ multi sub GeminiGenerateContent(@messages,
     }
 
     if @tools {
-        %body<tools> = @tools;
+        %body<tools> = [ %(functionDeclarations => @tools), ];
     }
 
     if !$top-k.isa(Whatever) { %body<topK> = $top-k; }
