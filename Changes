@@ -2,9 +2,10 @@ Revision history for WWW-Gemini
 
 {{$NEXT}}
 
-0.0.18  2025-05-06
+0.0.18  2025-06-02
     - Added new models gemini-2.5-*.
     - Facilitation of function calling / tools.
+    - Jupyter notebook with a function calling workflow.
 0.0.16  2025-05-06
     - Added new models gemini-2.5-*.
     - Added the option :@tools.
