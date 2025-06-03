@@ -150,10 +150,14 @@ graph TD
 ## TODO
 
 - [ ] TODO Implementation
+  - [X] DONE Function calling support 
   - [ ] TODO Image generation
   - [ ] TODO Image editing
+  - [ ] TODO Audio generation
+  - [ ] TODO Live AI support
 - [ ] TODO Documentation
   - [ ] DONE Core functionalities
+  - [X] DONE Function calling / tool workflow notebook
   - [ ] TODO Image generation
   - [ ] TODO Comparison of OpenAI vs Google image generation
   - [ ] TODO Thinking model(s) demo
