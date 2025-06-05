@@ -30,6 +30,7 @@ multi sub gemini-generation(**@args, *%args) {
 #| C<:$generation-method> -- generation method;
 #| C<:$safety-settings> -- safety settings;
 #| C<:@tools> -- function calling specs (i.e. tools);
+#| C<:%toolConfig> -- tool configuration spec;
 #| C<:api-key($auth-key)> -- authorization key (API key);
 #| C<:$timeout> -- timeout;
 #| C<:$format> -- format to use in answers post processing, one of <values json hash asis>);
