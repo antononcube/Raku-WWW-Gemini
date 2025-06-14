@@ -37,7 +37,7 @@ our proto GeminiGenerateContent($prompt is copy,
                                 Str :$generation-method = 'generateContent',
                                 :$safety-settings = Whatever,
                                 :@tools = Empty,
-                                :%toolConfig = %(),
+                                :toolConfig(:%tool-config) = %(),
                                 :api-key(:$auth-key) = Whatever,
                                 UInt :$timeout= 10,
                                 :$format= Whatever,
@@ -63,7 +63,7 @@ multi sub GeminiGenerateContent(@messages,
                                 Str :$generation-method is copy = 'generateContent',
                                 :$safety-settings is copy = Whatever,
                                 :@tools = Empty,
-                                :%toolConfig = %(),
+                                :toolConfig(:%tool-config) = %(),
                                 :api-key(:$auth-key) is copy = Whatever,
                                 UInt :$timeout= 10,
                                 :$format is copy = Whatever,
@@ -214,8 +214,8 @@ multi sub GeminiGenerateContent(@messages,
         %body<tools> = [ %(functionDeclarations => @tools), ];
     }
 
-    if %toolConfig {
-        %body<toolConfig> = %toolConfig;
+    if %tool-config {
+        %body<toolConfig> = %tool-config;
     }
 
     if !$top-k.isa(Whatever) { %body<topK> = $top-k; }
