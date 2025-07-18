@@ -8,7 +8,7 @@ use Test;
 my $method = 'tiny';
 
 plan *;
-#`[
+
 ## 1
 ok gemini-prompt(path => 'models', :$method);
 
@@ -23,8 +23,8 @@ isa-ok
 
 ## 4
 ok gemini-prompt('Generate Raku code for a loop over a list', generation-method => 'generateContent', model => Whatever, :$method);
-]
+
 ## 5
-ok gemini-prompt('Generate Raku code for a loop over a list', path => 'countTokens', model => 'gemini-1.5-flash', :$method);
+say gemini-prompt('Generate Raku code for a loop over a list. Generate just the code, no explanations.', path => 'countTokens', model => 'gemini-1.5-flash', :$method);
 
 done-testing;
