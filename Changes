@@ -2,6 +2,10 @@ Revision history for WWW-Gemini
 
 {{$NEXT}}
 
+0.0.22  2025-12-04
+    - Added gemini-2.5-* and gemini-3-* models.
+0.0.21  2025-09-23
+    - Better tool configuration.
 0.0.20  2025-06-07
     - Added passing of tool configurations. (See Gemini's "toolConfig".)
 0.0.18  2025-06-02
