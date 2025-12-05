@@ -19,8 +19,12 @@ my $knownModels = Set.new(
          gemini-2.0-flash gemini-2.0-flash-lite
          gemini-2.0-flash-001 gemini-2.0-flash-exp gemini-2.0-flash-thinking-exp-01-21
          gemini-2.5-pro-preview-03-25 gemini-2.5-pro-exp-03-25
-         gemini-2.5-flash-preview-04-17 gemini-2.5-flash-preview-05-20
+         gemini-2.5-flash-preview-04-17 gemini-2.5-flash-preview-05-20 gemini-2.5-flash-preview-09-2025
          gemini-2.5-pro-preview-05-06
+         gemini-2.5-flash
+         gemini-2.5-pro
+         gemini-3-pro-preview
+         gemini-3-pro-image-preview
          embedding-001 text-embedding-004 text-embedding-preview-0409 gemini-embedding-exp
          aqa imagen-3.0-generate-002>);
 
@@ -42,13 +46,17 @@ my %endPointToModels =
                 <gemini-pro
                  gemini-1.0-pro-001 gemini-1.0-pro gemini-1.0-pro-latest
                  gemini-1.5-pro-001 gemini-1.5-pro gemini-1.5-pro-latest
-                 gemini-1.5-flash-001 gemini-1.5-flash gemini-1.5-flash-latest
+                 gemini-1.5-flash-001 gemini-1.5-flash gemini-1.5-flash-latest gemini-1.5-flash-8b
                  gemini-2.0-pro-exp gemini-2.0-pro-exp-02-05
                  gemini-2.0-flash gemini-2.0-flash-lite
                  gemini-2.0-flash-001 gemini-2.0-flash-exp gemini-2.0-flash-thinking-exp-01-21
                  gemini-2.5-pro-preview-03-25 gemini-2.5-pro-exp-03-25
-                 gemini-2.5-flash-preview-04-17 gemini-2.5-flash-preview-05-20
+                 gemini-2.5-flash-preview-04-17 gemini-2.5-flash-preview-05-20 gemini-2.5-flash-preview-09-2025
                  gemini-2.5-pro-preview-05-06
+                 gemini-2.5-flash
+                 gemini-2.5-pro
+                 gemini-3-pro-preview
+                 gemini-3-pro-image-preview
                  gemini-pro-vision gemini-pro-vision-latest>,
         'generateAnswer' => <aqa>,
         'generateImage' => <imagen-3.0-generate-002>;
