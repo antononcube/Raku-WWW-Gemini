@@ -2,6 +2,8 @@ Revision history for WWW-Gemini
 
 {{$NEXT}}
 
+0.0.23  2026-05-26
+    - Added the models gemini-3.1-* and gemini-3.5-*
 0.0.22  2025-12-04
     - Added gemini-2.5-* and gemini-3-* models.
 0.0.21  2025-09-23
