@@ -25,6 +25,14 @@ my $knownModels = Set.new(
          gemini-2.5-pro
          gemini-3-pro-preview
          gemini-3-pro-image-preview
+         gemini-3-flash-preview
+         gemini-3.1-flash-tts-preview
+         gemini-3.1-flash-image-preview
+         gemini-3.1-flash-live-preview
+         gemini-3.1-flash-lite-preview
+         gemini-3.1-pro-preview gemini-3.1-pro-preview-customtools
+         gemini-3.1-flash-lite
+         gemini-3.5-flash
          embedding-001 text-embedding-004 text-embedding-preview-0409 gemini-embedding-exp
          aqa imagen-3.0-generate-002>);
 
@@ -57,6 +65,14 @@ my %endPointToModels =
                  gemini-2.5-pro
                  gemini-3-pro-preview
                  gemini-3-pro-image-preview
+                 gemini-3-flash-preview
+                 gemini-3.1-flash-tts-preview
+                 gemini-3.1-flash-image-preview
+                 gemini-3.1-flash-live-preview
+                 gemini-3.1-flash-lite-preview
+                 gemini-3.1-pro-preview gemini-3.1-pro-preview-customtools
+                 gemini-3.1-flash-lite
+                 gemini-3.5-flash
                  gemini-pro-vision gemini-pro-vision-latest>,
         'generateAnswer' => <aqa>,
         'generateImage' => <imagen-3.0-generate-002>;
